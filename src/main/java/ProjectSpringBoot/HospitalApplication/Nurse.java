@@ -1,41 +1,43 @@
+
 package ProjectSpringBoot.HospitalApplication;
 
 public class Nurse {
-		
-	private String name;
-	private String username;
-	private String password;
+	  private String name;
+    private String user;
+    private String password;
+    
+    public Nurse(String name, String user, String password) {
+    	this.name = name;
+    	this.user = user;
+    	this.password = password;
+    }
 
-	public Nurse(String nombre, String username, String password) {
-	        
-	    this.name = nombre;
-	    this.username = username;
-	    this.password = password;
-	
+	@Override
+	public String toString() {
+		return name + ", usuario: " + user + ", password: " + password;
 	}
 
-	public String getNombre() {
-	    return name;
+	public String getName() {
+		return name;
 	}
 
-	public void setNombre(String nombre) {
-	    this.name = name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getUsername() {
-	    return username;
+	public String getUser() {
+		return user;
 	}
 
-	public void setUsername(String username) {
-	    this.username = username;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public String getPassword() {
-	    return password;
+		return password;
 	}
 
 	public void setPassword(String password) {
-	    this.password = password;
-	}
-	
+		this.password = password;
+	} 
 }

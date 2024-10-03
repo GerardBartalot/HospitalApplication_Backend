@@ -4,27 +4,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-class NurseController {
+public class NurseController {
+    private List<Nurse> nurseList;
 
-    private List<Nurse> nurses = new ArrayList<>();
-
-    @Autowired
     public NurseController() {
-        nurses.add(new Nurse("Juan Pérez", "juan.perez", "pass1"));
-        nurses.add(new Nurse("Maria Lopez", "maria.lopez", "pass2"));
-        nurses.add(new Nurse("Antonio Garrido", "antonio.garrido", "pass3"));
-        nurses.add(new Nurse("Carlos Gonzalez", "carlos.gonzalez", "pass4"));
-        nurses.add(new Nurse("Sandra Castillo", "sandra.castillo", "pass5"));
+        this.nurseList = new ArrayList<>();
+        completeList();
     }
 
+    private void completeList() {
+        nurseList.add(new Nurse("Nil", "nilarroyo43", "contraseña0"));
+        nurseList.add(new Nurse("Gerard", "geryb", "contraseña1"));
+        nurseList.add(new Nurse("Sergio", "sejuma21", "contraseña2"));
+        nurseList.add(new Nurse("Carla", "carla14", "contraseña3"));
+        nurseList.add(new Nurse("Joan", "jachias21", "contraseña4"));
+        nurseList.add(new Nurse("Juan", "juan_", "pass7"));
+		    nurseList.add(new Nurse("Maria", "maria.nurse", "pass8"));
+		    nurseList.add(new Nurse("Daniel", "naranjo43","pass10"));
+        nurseList.add(new Nurse("Juan Pérez", "juan.perez", "pass1"));
+        nurseList.add(new Nurse("Maria Lopez", "maria.lopez", "pass2"));
+        nurseList.add(new Nurse("Antonio Garrido", "antonio.garrido", "pass3"));
+        nurseList.add(new Nurse("Carlos Gonzalez", "carlos.gonzalez", "pass4"));
+        nurseList.add(new Nurse("Sandra Castillo", "sandra.castillo", "pass5"));     
+    }
+  
+  
     @PostMapping("/nurse/login")
     public @ResponseBody ResponseEntity<Boolean> login(@RequestBody Nurse inputNurse) {
-        for (Nurse nurse : nurses) {
+        for (Nurse nurse : nurseList) {
         	System.out.println(nurse);
             if (inputNurse.getUsername().equals(nurse.getUsername()) && inputNurse.getPassword().equals(nurse.getPassword())) {
                 return ResponseEntity.ok(true);
@@ -32,4 +43,20 @@ class NurseController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
     }
+
+  
+    public List<Nurse> getAll() {
+        return nurseList;
+    }
+  
+  
+    public Nurse findByName(String name) {
+		  for (Nurse nurse : nurseList) {
+			  if (nurse.getName().equalsIgnoreCase(name)) {
+				  return nurse;
+			  }
+		  }
+		  return null;
+	  }
+
 }
