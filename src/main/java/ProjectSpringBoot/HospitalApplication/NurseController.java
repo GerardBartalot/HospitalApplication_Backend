@@ -37,7 +37,7 @@ public class NurseController {
     public @ResponseBody ResponseEntity<Boolean> login(@RequestBody Nurse inputNurse) {
         for (Nurse nurse : nurseList) {
         	System.out.println(nurse);
-            if (inputNurse.getUsername().equals(nurse.getUsername()) && inputNurse.getPassword().equals(nurse.getPassword())) {
+            if (inputNurse.getUser().equals(nurse.getUser()) && inputNurse.getPassword().equals(nurse.getPassword())) {
                 return ResponseEntity.ok(true);
             }
         }
