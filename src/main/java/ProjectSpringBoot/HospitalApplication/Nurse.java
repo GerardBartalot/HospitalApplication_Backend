@@ -2,7 +2,7 @@
 package ProjectSpringBoot.HospitalApplication;
 
 public class Nurse {
-	private String name;
+	  private String name;
     private String user;
     private String password;
     
@@ -40,5 +40,4 @@ public class Nurse {
 	public void setPassword(String password) {
 		this.password = password;
 	} 
-
 }
