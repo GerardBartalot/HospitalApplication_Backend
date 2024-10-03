@@ -1,37 +1,42 @@
 package ProjectSpringBoot.HospitalApplication;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-
 public class NurseController {
-	private List<Nurse> nurses;
+    private List<Nurse> nurseList;
 
-	public NurseController(List<Nurse> nurses) {
-		this.nurses = nurses;
-	}
+    public NurseController() {
+        this.nurseList = new ArrayList<>();
+        completeList();
+    }
 
-	public Nurse findByName(String name) {
-		for (Nurse nurse : nurses) {
+    private void completeList() {
+        nurseList.add(new Nurse("Nil", "nilarroyo43", "contraseña0"));
+        nurseList.add(new Nurse("Gerard", "gerryb", "contraseña1"));
+        nurseList.add(new Nurse("Sergio", "sejuma21", "contraseña2"));
+        nurseList.add(new Nurse("Carla", "carlita69", "contraseña3"));
+        nurseList.add(new Nurse("Joan", "jachias21", "contraseña4"));
+        nurseList.add(new Nurse("Juan", "JuanElEnfermero", "mcauto89"));
+		    nurseList.add(new Nurse("Maria", "MariaNurse", "megatron777"));
+		    nurseList.add(new Nurse("Gainza", "GainzaLaMaravilla","voyperro"));
+		    nurseList.add(new Nurse("Daniel", "Naranjo43","halamadrid"));
+        
+        
+      
+    }
+
+    public List<Nurse> getAll() {
+        return nurseList;
+    }
+  public Nurse findByName(String name) {
+		for (Nurse nurse : nurseList) {
 			if (nurse.getName().equalsIgnoreCase(name)) {
 				return nurse;
 			}
 		}
 		return null;
 	}
-	
-	/*
-	private ResponseEntity<Nurse> findByName2(@PathVariable String name){
-		//return ResponseEntity.ok("{}");
-		for (Nurse nurse : nurses) {
-			System.out.println(nurse);
-			if (name.equals(nurse.name())) {
-				return ResponseEntity.ok(nurse);
-			}
-		}
-		return ResponseEntity.notFound().build();
 
-	}
-	*/
 }

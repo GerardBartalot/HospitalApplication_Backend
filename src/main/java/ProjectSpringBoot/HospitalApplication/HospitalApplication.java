@@ -1,5 +1,7 @@
 package ProjectSpringBoot.HospitalApplication;
 
+import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
@@ -9,18 +11,13 @@ import java.util.Scanner;
 @SpringBootApplication
 
 public class HospitalApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(HospitalApplication.class, args);
-		
-		List<Nurse> nurses = new ArrayList<>();
-		nurses.add(new Nurse("Juan", "JuanElEnfermero", "mcauto89"));
-		nurses.add(new Nurse("Maria", "MariaNurse", "megatron777"));
-		nurses.add(new Nurse("Gainza", "GainzaLaMaravilla","voyperro"));
-		nurses.add(new Nurse("Daniel", "Naranjo43","halamadrid"));
-		
-		NurseController nurseController = new NurseController(nurses);
-		
+    public static void main(String[] args) {
+        SpringApplication.run(HospitalApplication.class, args);
+      NurseController nurseController = new NurseController();
+        List<Nurse> nurses = nurseController.getAll();
+        for (Nurse nurse : nurses) {
+            System.out.println(nurse);
+      
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Ingresa el nombre del enfermero:");
 		String nurseName = scanner.nextLine();
@@ -32,6 +29,9 @@ public class HospitalApplication {
 	        System.out.println("Enfermero no encontrado");
 	    }
 	}
-	
 
+
+        
+        }
+    }
 }
