@@ -51,13 +51,14 @@ public class NurseController {
     }
   
   
-    public Nurse findByName(String name) {
-		  for (Nurse nurse : nurseList) {
-			  if (nurse.getName().equalsIgnoreCase(name)) {
-				  return nurse;
-			  }
-		  }
-		  return null;
-	  }
+    @GetMapping("/find")
+    public ResponseEntity<Nurse> findByName(@RequestParam String name) {
+        for (Nurse nurse : nurseList) {
+            if (nurse.getName().equalsIgnoreCase(name)) {
+                return ResponseEntity.ok(nurse); 
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
+    }
 
 }
