@@ -51,7 +51,7 @@ public class NurseController {
     }
   
   
-    @GetMapping("/find")
+    @GetMapping("/findByName")
     public ResponseEntity<Nurse> findByName(@RequestParam String name) {
         for (Nurse nurse : nurseList) {
             if (nurse.getName().equalsIgnoreCase(name)) {
