@@ -29,9 +29,7 @@ public class HospitalApplication {
 	    } else {
 	        System.out.println("Enfermero no encontrado");
 	    }
-	}
-
-
-        
         }
-    }
+   
+   }
+}

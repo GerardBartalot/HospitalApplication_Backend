@@ -1,8 +1,7 @@
-
 package ProjectSpringBoot.HospitalApplication;
 
 public class Nurse {
-	  private String name;
+	private String name;
     private String user;
     private String password;
     
