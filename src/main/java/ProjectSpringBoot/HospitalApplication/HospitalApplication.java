@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 import java.util.ArrayList;
 import ProjectSpringBoot.HospitalApplication.NurseController;
@@ -23,7 +25,7 @@ public class HospitalApplication {
 		System.out.println("Ingresa el nombre del enfermero:");
 		String nurseName = scanner.nextLine();
 		
-		Nurse foundNurse = nurseController.findByName(nurseName);
+		ResponseEntity<Nurse> foundNurse = nurseController.findByName(nurseName);
 	    if (foundNurse != null) {
 	        System.out.println("Enfermero encontrado: " + foundNurse);
 	    } else {
