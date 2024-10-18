@@ -11,4 +11,5 @@ public interface NurseRepository extends CrudRepository<Nurse, Integer> {
     Nurse findByUsername(String username);
     Nurse findByName(String name);
     List<Nurse> findByNameContainingIgnoreCase(String name);
+    List<Nurse> findAll();
 }
