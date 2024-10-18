@@ -24,13 +24,21 @@ public class NurseController {
         }
     }
 
-	public ResponseEntity<Nurse> findByName(String nurseName) {
-		return null;
-	}
-
-	public List<Nurse> getAll() {
-		return null;
-	}
+    @GetMapping("/getAll")
+    public List<Nurse> getAll() {
+        return nurseRepository.findAll();
+    }
+  
+  
+    @GetMapping("/findByName")
+    public ResponseEntity<Nurse> findByName(@RequestParam String name) {
+        for (Nurse nurse : nurseList) {
+            if (nurse.getName().equalsIgnoreCase(name)) {
+                return ResponseEntity.ok(nurse); 
+            }
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
+    }
 
     
 }
