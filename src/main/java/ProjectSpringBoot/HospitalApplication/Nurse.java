@@ -54,4 +54,16 @@ public class Nurse {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    @Override
+    public String toString() {
+        return
+               "Id: " + nurse_id + "\n" +
+               "Name: " + name + "\n" +
+               "Username: " + username + "\n" +
+               "Password: " + password;
+    }
+
+
+    
 }
