@@ -1,18 +1,16 @@
 package ProjectSpringBoot.HospitalApplication;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/nurse")
 public class NurseController {
- 
+
     @Autowired
     private NurseRepository nurseRepository;
 
@@ -26,17 +24,20 @@ public class NurseController {
         }
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/index")
     public List<Nurse> getAll() {
         return nurseRepository.findAll();
     }
- 
-    @GetMapping("/find")
-    public ResponseEntity<Nurse> findByName(@RequestParam String name) {
-      Nurse nurse = nurseRepository.findByName(name);
-        if (nurse.getName().equalsIgnoreCase(name)) {
-          return ResponseEntity.ok(nurse); // 200
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Nurse> findByName(@PathVariable String name) {
+        Nurse nurse = nurseRepository.findByName(name);
+        if (nurse != null && nurse.getName().equalsIgnoreCase(name)) {
+            return ResponseEntity.ok(nurse);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
+        
     }
+    
 }
