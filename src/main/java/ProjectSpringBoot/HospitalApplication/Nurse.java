@@ -18,7 +18,7 @@ public class Nurse {
 
     public Nurse(int nurse_id, String name, String username, String password) {
         this.nurse_id=nurse_id;
-    this.name = name;
+        this.name = name;
         this.username = username;
         this.password = password;
     }

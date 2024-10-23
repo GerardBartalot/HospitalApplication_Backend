@@ -26,12 +26,12 @@ public class NurseController {
         }
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/index")
     public List<Nurse> getAll() {
         return nurseRepository.findAll();
     }
  
-    @GetMapping("/find")
+    @GetMapping("/name")
     public ResponseEntity<Nurse> findByName(@RequestParam String name) {
       Nurse nurse = nurseRepository.findByName(name);
         if (nurse.getName().equalsIgnoreCase(name)) {
