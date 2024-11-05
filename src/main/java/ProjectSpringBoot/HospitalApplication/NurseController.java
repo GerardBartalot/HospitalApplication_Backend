@@ -35,7 +35,7 @@ public class NurseController {
 
 	@GetMapping("/index")
 	public List<Nurse> getAll() {
-		return nurseRepository.findAll();
+		return (List<Nurse>) nurseRepository.findAll();
 	}
 
 	@GetMapping("/name")
