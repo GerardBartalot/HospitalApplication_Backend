@@ -51,12 +51,12 @@ public class NurseController {
 	        return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
 	    }
 	}
-
 	@GetMapping("/index")
-	public List<Nurse> getAll() {
-		return (List<Nurse>) nurseRepository.findAll();
+	public ResponseEntity<List<Nurse>> getAll() {
+	    List<Nurse> nurses = (List<Nurse>) nurseRepository.findAll();
+	    return ResponseEntity.ok(nurses); 
 	}
-
+	
 	@GetMapping("/name/{name}")
 	public ResponseEntity<Nurse> findByName(@PathVariable String name) {
 		Nurse nurse = nurseRepository.findByName(name);
@@ -77,7 +77,7 @@ public class NurseController {
 			return new ResponseEntity<>("Id not found", HttpStatus.UNAUTHORIZED);
 		}
 	}
-}
+
 	//_R__
 	@GetMapping("/read/{id}")
     public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
