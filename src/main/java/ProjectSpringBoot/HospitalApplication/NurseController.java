@@ -25,13 +25,15 @@ public class NurseController {
 	@PostMapping("/login")
 
 	public ResponseEntity<String> validateLogin(@RequestParam String username, @RequestParam String password) {
-		Nurse nurse = nurseRepository.findByUsername(username);
-		if (nurse != null && nurse.getPassword().equals(password)) {
-			return new ResponseEntity<>("Login Successful", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
-		}
+	    Nurse nurse = nurseRepository.findByUsernameAndPassword(username, password); 
+
+	    if (nurse != null) {
+	        return new ResponseEntity<>("Login Successful", HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+	    }
 	}
+
 
 	@GetMapping("/index")
 	public List<Nurse> getAll() {
