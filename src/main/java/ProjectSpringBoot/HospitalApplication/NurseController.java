@@ -47,6 +47,7 @@ public class NurseController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
 	}
 	
+	//_R__
 	@GetMapping("/read/{id}")
     public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
         Optional<Nurse> nurse = nurseRepository.findById(id);
