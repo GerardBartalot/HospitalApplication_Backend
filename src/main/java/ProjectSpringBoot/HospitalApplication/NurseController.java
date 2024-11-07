@@ -46,4 +46,15 @@ public class NurseController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
 	}
+
+	@PutMapping("/delete/{id}")
+	public ResponseEntity<String> deleteNurse(@PathVariable int id) {
+		Optional<Nurse> existingNurse = nurseRepository.findById(id);
+		if (existingNurse.isPresent()) {
+			this.nurseRepository.deleteById(id);
+			return new ResponseEntity<>("Nurse deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Id not found", HttpStatus.UNAUTHORIZED);
+		}
+	}
 }
