@@ -23,15 +23,13 @@ public class NurseController {
 	private NurseRepository nurseRepository;
 
 	@PostMapping("/create")
-	public ResponseEntity<String> create(@RequestBody Nurse newNurse) {
+	public ResponseEntity<String> createNurse(@RequestBody Nurse newNurse) {
 	    if (newNurse.getName() == null || newNurse.getName().isEmpty() ||
 	        newNurse.getUsername() == null || newNurse.getUsername().isEmpty() ||
 	        newNurse.getPassword() == null || newNurse.getPassword().isEmpty()) {
-	    	
-	        
+        
 	        return new ResponseEntity<>("All fields (id, name, username, and password) are required.", HttpStatus.BAD_REQUEST);
 	    }
-
 	    Nurse savedNurse = nurseRepository.save(newNurse);
 
 	    if (savedNurse != null) {
@@ -41,7 +39,6 @@ public class NurseController {
 	    }
 	}
 
-	
 	
 	@PostMapping("/login")
 
@@ -54,7 +51,6 @@ public class NurseController {
 	        return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
 	    }
 	}
-
 
 	@GetMapping("/index")
 	public List<Nurse> getAll() {
@@ -69,7 +65,19 @@ public class NurseController {
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
 	}
-  
+
+
+	@PutMapping("/delete/{id}")
+	public ResponseEntity<String> deleteNurse(@PathVariable int id) {
+		Optional<Nurse> existingNurse = nurseRepository.findById(id);
+		if (existingNurse.isPresent()) {
+			this.nurseRepository.deleteById(id);
+			return new ResponseEntity<>("Nurse deleted", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Id not found", HttpStatus.UNAUTHORIZED);
+		}
+	}
+}
 	//_R__
 	@GetMapping("/read/{id}")
     public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
@@ -106,3 +114,4 @@ public class NurseController {
 
 	}
 }
+
