@@ -1,15 +1,10 @@
 package ProjectSpringBoot.HospitalApplication;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import java.util.Optional;
 
 @RestController
@@ -41,7 +36,7 @@ public class NurseController {
 	@GetMapping("/name/{name}")
 	public ResponseEntity<Nurse> findByName(@PathVariable String name) {
 	    Nurse nurse = nurseRepository.findByName(name);
-	    if (nurse.getName().equalsIgnoreCase(name)) {
+	    if (nurse != null && nurse.getName().equalsIgnoreCase(name)) {
 	        return ResponseEntity.ok(nurse); // 200
 	    }
 	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
@@ -69,5 +64,7 @@ public class NurseController {
 	    } else {
 	        return new ResponseEntity<>("Nurse not found", HttpStatus.NOT_FOUND);
 	    }
+	
+	}
 	
 }
