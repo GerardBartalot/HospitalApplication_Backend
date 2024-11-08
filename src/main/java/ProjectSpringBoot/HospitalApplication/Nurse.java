@@ -63,7 +63,5 @@ public class Nurse {
                "Username: " + username + "\n" +
                "Password: " + password;
     }
-
-
     
 }
