@@ -9,6 +9,4 @@ public interface NurseRepository extends CrudRepository<Nurse, Integer> {
 	Nurse findByUsernameAndPassword(String username, String password);
 	Nurse findByName(String name);
 	List<Nurse> findByNameContainingIgnoreCase(String name);
-	
-
 }
