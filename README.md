@@ -1,40 +1,40 @@
 # Hospital Application
 
-Aplicación para la gestión de enfermeras en un hospital, desarrollada en Java y Spring. Esta aplicación permite a los usuarios validar credenciales, consultar la lista de enfermeras, buscar enfermeras por nombre y actualizar los datos de una enfermera.
+Application for managing nurses in a hospital, developed in Java and Spring. This application allows users to validate credentials, consult the list of nurses, search for nurses by name, and update nurse data.
 
-## Descripción
+## Description
 
-El proyecto **Hospital Application** tiene como objetivo facilitar la administración de los datos de enfermeras en un entorno hospitalario. La aplicación provee una API que permite gestionar la información de manera eficiente, mejorando el flujo de trabajo y la precisión en la administración de personal de enfermería.
+The **Hospital Application** project aims to facilitate the management of nurse data in a hospital environment. The application provides an API that allows efficient information management, improving workflow and accuracy in nursing staff administration.
 
-## Instalación
+## Installation
 
-1. Clona el repositorio:
+1. Clone the repository:
    ```bash
-   git clone https://github.com/tu_usuario/HospitalApplication.git
+   git clone https://github.com/GerardBartalot/M13-Spring-Boot.git
 
-## Uso
+## Usage
 
-ENDPOINTS DE LA API
+API ENDPOINTS
 
-1. Validación de Login (POST /validateLogin)
-Valida las credenciales de acceso.
+1. Login Validation (POST /validateLogin)
+Validates access credentials.
 
-2. Obtener Todas las Enfermeras (GET /getAll)
-Devuelve la lista completa de enfermeras registradas.
+2. Get All Nurses (GET /getAll)
+Returns the complete list of registered nurses.
 
-3. Crear Enfermera (POST /createNurse)
-Crea un enfermero/a a partir de su ID.
+3. Create Nurse (POST /createNurse)
+Creates a nurse using their ID.
 
-4. Buscar Enfermera por Nombre (GET /findByName/{name})
-Busca una enfermera específica por nombre.
+4. Search Nurse by Name (GET /findByName/{name})
+Searches for a specific nurse by name.
 
-5. Actualizar Datos de Enfermera (PUT /updateNurse)
-Actualiza la información de una enfermera.
+5. Update Nurse Data (PUT /updateNurse)
+Updates the information of a nurse.
 
-6. Eliminar Enfermera (PUT /delete/{id})
-Elimina una enfermera específica del sistema por su ID.
+6. Delete Nurse (PUT /delete/{id})
+Deletes a specific nurse from the system by their ID.
 
-7. Obtener Enfermera por ID (GET /read/{id})
-Devuelve los datos de una enfermera específica por su ID.
+7. Get Nurse by ID (GET /read/{id})
+Returns the data of a specific nurse by their ID.
 
-Cada endpoint permite realizar una acción específica para gestionar los datos de enfermeros/as en el sistema de manera eficiente.
+Each endpoint performs a specific action to efficiently manage nurse data within the system.
