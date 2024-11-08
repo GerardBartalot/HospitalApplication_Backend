@@ -2,9 +2,11 @@ package ProjectSpringBoot.HospitalApplication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doNothing;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +19,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import ProjectSpringBoot.HospitalApplication.Nurse;
-import ProjectSpringBoot.HospitalApplication.NurseController;
-import ProjectSpringBoot.HospitalApplication.NurseRepository;
 
 class NurseControllerTest {
 
@@ -36,6 +34,37 @@ class NurseControllerTest {
     }
 
     @Test
+    void testCreateNurseSuccess() {
+        // Arrange
+        Nurse newNurse = new Nurse();
+        newNurse.setName("Jane Doe");
+        newNurse.setUsername("jdoe");
+        newNurse.setPassword("password123");
+
+        when(nurseRepository.save(any(Nurse.class))).thenReturn(newNurse);
+
+        // Act
+        ResponseEntity<String> response = nurseController.createNurse(newNurse);
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals("Nurse added successfully with ID: " + newNurse.getNurse_id(), response.getBody());
+    }
+
+    @Test
+    void testCreateNurseFailureMissingFields() {
+        // Arrange
+        Nurse newNurse = new Nurse();  // Nurse without required fields
+
+        // Act
+        ResponseEntity<String> response = nurseController.createNurse(newNurse);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("All fields (id, name, username, and password) are required.", response.getBody());
+    }
+
+    @Test
     void testValidateLoginSuccess() {
         // Arrange
         String username = "jdoe";
@@ -43,7 +72,7 @@ class NurseControllerTest {
         Nurse nurse = new Nurse();
         nurse.setUsername(username);
         nurse.setPassword(password);
-        when(nurseRepository.findByUsername(username)).thenReturn(nurse);
+        when(nurseRepository.findByUsernameAndPassword(username, password)).thenReturn(nurse);
 
         // Act
         ResponseEntity<String> response = nurseController.validateLogin(username, password);
@@ -58,7 +87,7 @@ class NurseControllerTest {
         // Arrange
         String username = "jdoe";
         String password = "wrongpassword";
-        when(nurseRepository.findByUsername(username)).thenReturn(null);
+        when(nurseRepository.findByUsernameAndPassword(username, password)).thenReturn(null);
 
         // Act
         ResponseEntity<String> response = nurseController.validateLogin(username, password);
@@ -79,11 +108,12 @@ class NurseControllerTest {
         when(nurseRepository.findAll()).thenReturn(nurses);
 
         // Act
-        List<Nurse> response = nurseController.getAll();
+        ResponseEntity<List<Nurse>> response = nurseController.getAll();
 
         // Assert
-        assertNotNull(response);
-        assertEquals(2, response.size());
+        assertNotNull(response.getBody());
+        assertEquals(2, response.getBody().size());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -117,6 +147,68 @@ class NurseControllerTest {
     }
 
     @Test
+    void testDeleteNurseSuccess() {
+        // Arrange
+        int id = 1;
+        Nurse nurse = new Nurse();
+        nurse.setNurse_id(id);
+        when(nurseRepository.findById(id)).thenReturn(Optional.of(nurse));
+        doNothing().when(nurseRepository).deleteById(id);
+
+        // Act
+        ResponseEntity<String> response = nurseController.deleteNurse(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Nurse deleted", response.getBody());
+    }
+
+    @Test
+    void testDeleteNurseNotFound() {
+        // Arrange
+        int id = 1;
+        when(nurseRepository.findById(id)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<String> response = nurseController.deleteNurse(id);
+
+        // Assert
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertEquals("Id not found", response.getBody());
+    }
+
+    @Test
+    void testGetNurseByIdFound() {
+        // Arrange
+        int id = 1;
+        Nurse nurse = new Nurse();
+        nurse.setNurse_id(id);
+        when(nurseRepository.findById(id)).thenReturn(Optional.of(nurse));
+
+        // Act
+        ResponseEntity<Nurse> response = nurseController.getNurseById(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(id, response.getBody().getNurse_id());
+    }
+
+    @Test
+    void testGetNurseByIdNotFound() {
+        // Arrange
+        int id = 1;
+        when(nurseRepository.findById(id)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<Nurse> response = nurseController.getNurseById(id);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(null, response.getBody());
+    }
+
+    @Test
     void testUpdateNurseSuccess() {
         // Arrange
         int id = 1;
@@ -130,6 +222,7 @@ class NurseControllerTest {
         updatedNurse.setPassword("newpassword");
 
         when(nurseRepository.findById(anyInt())).thenReturn(Optional.of(existingNurse));
+        when(nurseRepository.save(any(Nurse.class))).thenReturn(existingNurse);
 
         // Act
         ResponseEntity<String> response = nurseController.updateNurse(id, updatedNurse);
@@ -155,5 +248,4 @@ class NurseControllerTest {
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertEquals("Nurse not found", response.getBody());
     }
-    
 }
