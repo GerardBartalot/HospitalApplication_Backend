@@ -30,7 +30,6 @@ public class NurseController {
 	        return new ResponseEntity<>("Error creating nurse", HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	}
-
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> validateLogin(@RequestParam String username, @RequestParam String password) {
