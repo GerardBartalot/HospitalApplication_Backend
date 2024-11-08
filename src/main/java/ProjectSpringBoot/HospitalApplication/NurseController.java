@@ -70,14 +70,14 @@ public class NurseController {
 	}
 
 	@GetMapping("/read/{id}")
-    public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
-        Optional<Nurse> nurse = nurseRepository.findById(id);
-        if (nurse.isPresent()) {
-            return new ResponseEntity<>(nurse.get(), HttpStatus.OK);//200
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);//404
-        }
-    }
+    	public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
+        	Optional<Nurse> nurse = nurseRepository.findById(id);
+        	if (nurse.isPresent()) {
+           	        return new ResponseEntity<>(nurse.get(), HttpStatus.OK);//200
+        	} else {
+            		return new ResponseEntity<>(HttpStatus.NOT_FOUND);//404
+       		}
+    	}
   
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updateNurse(@PathVariable int id, @RequestBody Nurse updatedNurse) {
