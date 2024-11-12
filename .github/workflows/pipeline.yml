@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'  # Cambia a tu versión de Java si es diferente
-          distribution: 'adopt'
+          distribution: 'temurin'  # Temurin es una distribución popular de OpenJDK
 
       # Paso 3: Cache de dependencias de Maven
       - name: Cache Maven packages
