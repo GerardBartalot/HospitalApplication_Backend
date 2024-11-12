@@ -22,7 +22,7 @@ public class NurseController {
         
 	        return new ResponseEntity<>("All fields (id, name, username, and password) are required.", HttpStatus.BAD_REQUEST);
 	    }
-	    Nurse savedNurse = nurseRepository.save(newNurse);
+	    //Nurse savedNurse = nurseRepository.save(newNurse);
 
 	    if (savedNurse != null) {
 	        return new ResponseEntity<>("Nurse added successfully with ID: " + savedNurse.getNurse_id(), HttpStatus.CREATED);
