@@ -2,45 +2,35 @@ name: Java CI with Maven
 
 on:
   push:
-    branches:
-      -master
+    branches: [ "master" ]
   pull_request:
-    branches:
-      - master
+    branches: [ "master" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Paso 1: Checkout del código
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      # Paso 2: Configurar Java
+      # Cambiar al directorio correcto
+      - name: Set working directory
+        run: cd M13-Spring-Boot
+
+      # Configurar el JDK
       - name: Set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'  # Cambia a tu versión de Java si es diferente
-          distribution: 'temurin'  # Temurin es una distribución popular de OpenJDK
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
 
-      # Paso 3: Cache de dependencias de Maven
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+      # Construir con Maven
+      - name: Build with Maven
+        run: mvn -B package
+        working-directory: M13-Spring-Boot
 
-      # Paso 4: Instalar dependencias y compilar
-      - name: Install dependencies and compile
-        run: mvn clean install -DskipTests=true
-
-      # Paso 5: Ejecutar pruebas
+      # Ejecutar pruebas
       - name: Run tests
         run: mvn test
-
-      # Paso 6: Construir el paquete
-      - name: Package the application
-        run: mvn package -DskipTests=false
+        working-directory: M13-Spring-Boot
