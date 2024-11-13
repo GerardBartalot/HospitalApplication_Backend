@@ -23,10 +23,9 @@ jobs:
 
       # Construir con Maven
       - name: Build with Maven
-        run: mvn -B package
-        working-directory: M13-Spring-Boot
+        run: mvn package
 
       # Ejecutar pruebas
       - name: Run tests
         run: mvn test
-        working-directory: M13-Spring-Boot
+
