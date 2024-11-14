@@ -33,7 +33,7 @@ public class NurseController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> validateLogin(@RequestParam String username, @RequestParam String password) {
-	    Nurse nurse = nurseRepository.findByUsernameAndPassword(username, password); 
+	    Nurse nurse = nurseRepository.findByUsernameAndPassword(username); 
 
 	    if (nurse != null) {
 	        return new ResponseEntity<>("Login Successful", HttpStatus.OK);
