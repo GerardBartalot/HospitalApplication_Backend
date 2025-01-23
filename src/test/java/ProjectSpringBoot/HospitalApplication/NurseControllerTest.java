@@ -75,7 +75,7 @@ class NurseControllerTest {
         when(nurseRepository.findByUsernameAndPassword(username, password)).thenReturn(nurse);
 
         // Act
-        ResponseEntity<String> response = nurseController.validateLogin(username, password);
+        ResponseEntity<Nurse> response = nurseController.validateLogin(username, password);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -90,7 +90,7 @@ class NurseControllerTest {
         when(nurseRepository.findByUsernameAndPassword(username, password)).thenReturn(null);
 
         // Act
-        ResponseEntity<String> response = nurseController.validateLogin(username, password);
+        ResponseEntity<Nurse> response = nurseController.validateLogin(username, password);
 
         // Assert
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
