@@ -18,22 +18,21 @@ public class NurseController {
 	private NurseRepository nurseRepository;
 
 	@PostMapping("/create")
-	public ResponseEntity<String> createNurse(@RequestBody Nurse newNurse) {
-	    if (newNurse.getName() == null || newNurse.getName().isEmpty() ||
-	        newNurse.getUsername() == null || newNurse.getUsername().isEmpty() ||
-	        newNurse.getPassword() == null || newNurse.getPassword().isEmpty()) {
-        
-	        return new ResponseEntity<>("All fields (id, name, username, and password) are required.", HttpStatus.BAD_REQUEST);
-	    }
-	    	Nurse savedNurse = nurseRepository.save(newNurse);
 
-	    if (savedNurse != null) {
-	        return new ResponseEntity<>("Nurse added successfully with ID: " + savedNurse.getNurse_id(), HttpStatus.CREATED);
-	    } else {
-	        return new ResponseEntity<>("Error creating nurse", HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
+	public ResponseEntity<Nurse> createNurse(@RequestBody Nurse newNurse) {
+		if (newNurse.getName() == null || newNurse.getName().isEmpty() ||
+				newNurse.getUsername() == null || newNurse.getUsername().isEmpty() ||
+				newNurse.getPassword() == null || newNurse.getPassword().isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		Nurse savedNurse = nurseRepository.save(newNurse);
+		if (savedNurse != null) {
+			return new ResponseEntity<>(savedNurse, HttpStatus.CREATED);
+		} else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
-	
+
 	@PostMapping("/login")
 	public ResponseEntity<Nurse> validateLogin(@RequestParam String username, @RequestParam String password) {
 		Nurse nurse = nurseRepository.findByUsernameAndPassword(username, password);
@@ -44,20 +43,20 @@ public class NurseController {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 	}
-  
+
 	@GetMapping("/index")
 	public ResponseEntity<List<Nurse>> getAll() {
-	    List<Nurse> nurses = (List<Nurse>) nurseRepository.findAll();
-	    return ResponseEntity.ok(nurses); 
+		List<Nurse> nurses = (List<Nurse>) nurseRepository.findAll();
+		return ResponseEntity.ok(nurses);
 	}
-	
+
 	@GetMapping("/name/{name}")
 	public ResponseEntity<Nurse> findByName(@PathVariable String name) {
-	    Nurse nurse = nurseRepository.findByName(name);
-	    if (nurse != null && nurse.getName().equalsIgnoreCase(name)) {
-	        return ResponseEntity.ok(nurse); // 200
-	    }
-	    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
+		Nurse nurse = nurseRepository.findByName(name);
+		if (nurse != null && nurse.getName().equalsIgnoreCase(name)) {
+			return ResponseEntity.ok(nurse); // 200
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // 404
 	}
 
 	@PutMapping("/delete/{id}")
@@ -72,37 +71,37 @@ public class NurseController {
 	}
 
 	@GetMapping("/read/{id}")
-    	public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
-        	Optional<Nurse> nurse = nurseRepository.findById(id);
-        	if (nurse.isPresent()) {
-           	        return new ResponseEntity<>(nurse.get(), HttpStatus.OK);//200
-        	} else {
-            		return new ResponseEntity<>(HttpStatus.NOT_FOUND);//404
-       		}
-    	}
-  
+	public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
+		Optional<Nurse> nurse = nurseRepository.findById(id);
+		if (nurse.isPresent()) {
+			return new ResponseEntity<>(nurse.get(), HttpStatus.OK);// 200
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);// 404
+		}
+	}
+
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updateNurse(@PathVariable int id, @RequestBody Nurse updatedNurse) {
-	    Optional<Nurse> existingNurse = nurseRepository.findById(id);
+		Optional<Nurse> existingNurse = nurseRepository.findById(id);
 
-	    if (existingNurse.isPresent()) {
-	        Nurse nurse = existingNurse.get();
+		if (existingNurse.isPresent()) {
+			Nurse nurse = existingNurse.get();
 
-	        if (updatedNurse.getName() != null) {
-	            nurse.setName(updatedNurse.getName());
-	        }
-	        if (updatedNurse.getUsername() != null) {
-	            nurse.setUsername(updatedNurse.getUsername());
-	        }
-	        if (updatedNurse.getPassword() != null) {
-	            nurse.setPassword(updatedNurse.getPassword());
-	        }
+			if (updatedNurse.getName() != null) {
+				nurse.setName(updatedNurse.getName());
+			}
+			if (updatedNurse.getUsername() != null) {
+				nurse.setUsername(updatedNurse.getUsername());
+			}
+			if (updatedNurse.getPassword() != null) {
+				nurse.setPassword(updatedNurse.getPassword());
+			}
 
-	        nurseRepository.save(nurse);
-	        return new ResponseEntity<>("Nurse updated successfully", HttpStatus.OK);
-	    } else {
-	        return new ResponseEntity<>("Nurse not found", HttpStatus.NOT_FOUND);
-	    }
+			nurseRepository.save(nurse);
+			return new ResponseEntity<>("Nurse updated successfully", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Nurse not found", HttpStatus.NOT_FOUND);
+		}
 	}
-  
+
 }
