@@ -86,7 +86,7 @@ public class NurseController {
             		return new ResponseEntity<>(HttpStatus.NOT_FOUND);//404
        		}
     	}
-  
+	/*
 	@PutMapping("/update/{id}")
 	public ResponseEntity<String> updateNurse(@PathVariable int id, @RequestBody Nurse updatedNurse) {
 	    Optional<Nurse> existingNurse = nurseRepository.findById(id);
@@ -110,5 +110,35 @@ public class NurseController {
 	        return new ResponseEntity<>("Nurse not found", HttpStatus.NOT_FOUND);
 	    }
 	}
+	*/
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Map<String, String>> updateNurse(@PathVariable int id, @RequestBody Nurse updatedNurse) {
+	    Optional<Nurse> existingNurse = nurseRepository.findById(id);
+
+	    if (existingNurse.isPresent()) {
+	        Nurse nurse = existingNurse.get();
+
+	        if (updatedNurse.getName() != null) {
+	            nurse.setName(updatedNurse.getName());
+	        }
+	        if (updatedNurse.getUsername() != null) {
+	            nurse.setUsername(updatedNurse.getUsername());
+	        }
+	        if (updatedNurse.getPassword() != null) {
+	            nurse.setPassword(updatedNurse.getPassword());
+	        }
+
+	        nurseRepository.save(nurse);
+
+	        Map<String, String> response = new HashMap<>();
+	        response.put("message", "Nurse updated successfully");
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	    } else {
+	        Map<String, String> response = new HashMap<>();
+	        response.put("message", "Nurse not found");
+	        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+	    }
+	}
+
   
 }
