@@ -10,6 +10,7 @@ import static org.mockito.Mockito.doNothing;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -156,7 +157,7 @@ class NurseControllerTest {
         doNothing().when(nurseRepository).deleteById(id);
 
         // Act
-        ResponseEntity<String> response = nurseController.deleteNurse(id);
+        ResponseEntity<Map<String, String>> response = nurseController.deleteNurse(id);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -170,7 +171,7 @@ class NurseControllerTest {
         when(nurseRepository.findById(id)).thenReturn(Optional.empty());
 
         // Act
-        ResponseEntity<String> response = nurseController.deleteNurse(id);
+        ResponseEntity<Map<String, String>> response = nurseController.deleteNurse(id);
 
         // Assert
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());

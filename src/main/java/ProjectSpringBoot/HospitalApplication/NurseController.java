@@ -1,5 +1,4 @@
 package ProjectSpringBoot.HospitalApplication;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import ProjectSpringBoot.HospitalApplication.Nurse;
 import ProjectSpringBoot.HospitalApplication.NurseRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -61,15 +62,20 @@ public class NurseController {
 	}
 
 	@PutMapping("/delete/{id}")
-	public ResponseEntity<String> deleteNurse(@PathVariable int id) {
-		Optional<Nurse> existingNurse = nurseRepository.findById(id);
-		if (existingNurse.isPresent()) {
-			this.nurseRepository.deleteById(id);
-			return new ResponseEntity<>("Nurse deleted", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("Id not found", HttpStatus.UNAUTHORIZED);
-		}
+	public ResponseEntity<Map<String, String>> deleteNurse(@PathVariable int id) {
+	    System.out.println("Recibida petición para borrar ID: " + id);
+	    Optional<Nurse> existingNurse = nurseRepository.findById(id);
+	    Map<String, String> response = new HashMap<>();
+	    if (existingNurse.isPresent()) {
+	        nurseRepository.deleteById(id);
+	        response.put("message", "Nurse deleted");
+	        return new ResponseEntity<>(response, HttpStatus.OK);
+	    } else {
+	        response.put("message", "Id not found");
+	        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+	    }
 	}
+
 
 	@GetMapping("/read/{id}")
     	public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
