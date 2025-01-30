@@ -1,4 +1,5 @@
 package ProjectSpringBoot.HospitalApplication;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,9 @@ public class NurseController {
 	@PostMapping("/create")
 
 	public ResponseEntity<Nurse> createNurse(@RequestBody Nurse newNurse) {
-		if (newNurse.getName() == null || newNurse.getName().isEmpty() ||
-				newNurse.getUsername() == null || newNurse.getUsername().isEmpty() ||
-				newNurse.getPassword() == null || newNurse.getPassword().isEmpty()) {
+		if (newNurse.getName() == null || newNurse.getName().isEmpty() || newNurse.getUsername() == null
+				|| newNurse.getUsername().isEmpty() || newNurse.getPassword() == null
+				|| newNurse.getPassword().isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		Nurse savedNurse = nurseRepository.save(newNurse);
@@ -62,19 +63,18 @@ public class NurseController {
 
 	@PutMapping("/delete/{id}")
 	public ResponseEntity<Map<String, String>> deleteNurse(@PathVariable int id) {
-	    System.out.println("Recibida petición para borrar ID: " + id);
-	    Optional<Nurse> existingNurse = nurseRepository.findById(id);
-	    Map<String, String> response = new HashMap<>();
-	    if (existingNurse.isPresent()) {
-	        nurseRepository.deleteById(id);
-	        response.put("message", "Nurse deleted");
-	        return new ResponseEntity<>(response, HttpStatus.OK);
-	    } else {
-	        response.put("message", "Id not found");
-	        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-	    }
+		System.out.println("Recibida petición para borrar ID: " + id);
+		Optional<Nurse> existingNurse = nurseRepository.findById(id);
+		Map<String, String> response = new HashMap<>();
+		if (existingNurse.isPresent()) {
+			nurseRepository.deleteById(id);
+			response.put("message", "Nurse deleted");
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else {
+			response.put("message", "Id not found");
+			return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+		}
 	}
-
 
 	@GetMapping("/read/{id}")
 	public ResponseEntity<Nurse> getNurseById(@PathVariable int id) {
@@ -87,7 +87,7 @@ public class NurseController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<String> updateNurse(@PathVariable int id, @RequestBody Nurse updatedNurse) {
+	public ResponseEntity<Map<String, String>> updateNurse(@PathVariable int id, @RequestBody Nurse updatedNurse) {
 		Optional<Nurse> existingNurse = nurseRepository.findById(id);
 
 		if (existingNurse.isPresent()) {
@@ -104,9 +104,14 @@ public class NurseController {
 			}
 
 			nurseRepository.save(nurse);
-			return new ResponseEntity<>("Nurse updated successfully", HttpStatus.OK);
+
+			Map<String, String> response = new HashMap<>();
+			response.put("message", "Nurse updated successfully");
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
-			return new ResponseEntity<>("Nurse not found", HttpStatus.NOT_FOUND);
+			Map<String, String> response = new HashMap<>();
+			response.put("message", "Nurse not found");
+			return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 		}
 	}
 

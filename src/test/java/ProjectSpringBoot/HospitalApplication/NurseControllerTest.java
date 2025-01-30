@@ -226,7 +226,7 @@ class NurseControllerTest {
         when(nurseRepository.save(any(Nurse.class))).thenReturn(existingNurse);
 
         // Act
-        ResponseEntity<String> response = nurseController.updateNurse(id, updatedNurse);
+        ResponseEntity<Map<String, String>> response = nurseController.updateNurse(id, updatedNurse);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -243,7 +243,7 @@ class NurseControllerTest {
         when(nurseRepository.findById(anyInt())).thenReturn(Optional.empty());
 
         // Act
-        ResponseEntity<String> response = nurseController.updateNurse(id, updatedNurse);
+        ResponseEntity<Map<String, String>> response = nurseController.updateNurse(id, updatedNurse);
 
         // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
