@@ -45,7 +45,7 @@ class NurseControllerTest {
         when(nurseRepository.save(any(Nurse.class))).thenReturn(newNurse);
 
         // Act
-        ResponseEntity<String> response = nurseController.createNurse(newNurse);
+        ResponseEntity<Nurse> response = nurseController.createNurse(newNurse);
 
         // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
@@ -58,7 +58,7 @@ class NurseControllerTest {
         Nurse newNurse = new Nurse();  // Nurse without required fields
 
         // Act
-        ResponseEntity<String> response = nurseController.createNurse(newNurse);
+        ResponseEntity<Nurse> response = nurseController.createNurse(newNurse);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
